@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<!--
+			viewport meta标签：作用是对移动设备友好，使移动设备优先
+			width=device-width：使网页以设备的宽度展示，以适配不同宽度的设备
+			initial-scale=1.0：初始的缩放大小是1倍，即原始的大小
+			user-scalable=no：禁止用户缩放页面大小
+			maximum-scale=1.0：最大缩放倍数为1倍，常与user-scale=no一起使用，是页面看起来像原生应用
+			写全了就是一个标准的移动设备优先的页面
+		-->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+		{% load bootstrap3 %}
+		{% bootstrap_css %}
+		{% bootstrap_javascript %}
+		
+		<title>Sign</title>
+	</head>
+	<body role="document">
+		<div class="container">
+			<nav class="navbar navbar-inverse navbar-fixed-top">
+				<div class="navbar-header">
+					<button type="button" class="collapsed navbar-toggle" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+						<!--此处是按钮上的三个横线样式-->
+						<span class="sr-only"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a href="#" class="navbar-brand">{{ event.name }}</a>
+				</div>
+				<div id="navbar" class="collapse navbar-collapse" aria-expanded="false">
+					<ul class="nav navbar-nav">
+						<li><a href="/event_manage/">发布会</a></li>
+						<li><a href="/guest_manage/">嘉宾</a></li>
+					</ul>
+				</div>
+			</nav>
+			<!--签到功能-->
+			<div class="page-header" style="padding-top: 80px;">
+				<form class="navbar-form" method="post" action="/sign_index_action/{{ event.id }}/" style="padding-left: 15px;">
+						<div class="form-group">
+							<input type="text" name="phone" placeholder="输入手机号" class="form-control"/>
+						</div>
+						<button type="submit" class="btn btn-success">签到</button>
+						<font color="red">
+							<br />{{ hint }}
+							<br />{{ guest.realname }}
+							<br />{{ guest.phone }}
+						</font>
+				</form>
+				<div class="row">
+					<div class="col-md-6">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>未签到嘉宾</th>
+									<th>已签到嘉宾</th>
+									<th>嘉宾总数</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>{{ unsigned }}</td>
+									<td>{{ signed }}</td>
+									<td>{{ total }}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

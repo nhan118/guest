@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Django Page</title>
+    <style type="text/css">
+    	.login-cotent{
+    		width: 360px;
+    		margin: 100px auto;
+    		background-color:#eceef1;
+    		padding: 10px;
+    		text-align: center;
+    		
+    	}
+    	input{
+    		margin: 5px;
+    	}
+    	#btn{
+    		margin: 10px;
+    		/*position: fixed;
+    		float:right;*/
+    	}
+    </style>
+</head>
+<body>
+    <div class="login-cotent">
+	    <h1>发布会管理</h1>
+	    <form method="post" action="/login_action/">
+	    	<input type="text" name="username" id="username" placeholder="username" /><br />
+	    	<input type="password" name="password" id="password" placeholder="password" /><br />
+	    	{{ error }}<br />
+	    	<button type="submit" id="btn"/>登录</button>
+            {% csrf_token %}
+	    </form>
+    </div>
+</body>
+</html>

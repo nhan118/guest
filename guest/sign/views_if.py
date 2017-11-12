@@ -36,8 +36,8 @@ def add_event(request):
 
 # 查询发布会接口
 def get_event_list(request):
-    eid = request.POST.get('eid', '')
-    name = request.POST.get('name', '')
+    eid = request.GET.get('eid', '')
+    name = request.GET.get('name', '')
 
     if eid == '' and name == '':
         return JsonResponse({'status':10021, 'message':'parameter error'})
@@ -55,7 +55,7 @@ def get_event_list(request):
             event['limit'] = result.limit
             event['start_time'] = result.start_time
             return JsonResponse({'status':200, 'message':'success', 'data':event})
-     if name != '':
+    if name != '':
          datas = []
          results = Event.objects.filter(name__contains=name)
          if results:
@@ -154,4 +154,54 @@ def get_guest_list(request):
             guest['sign'] = result.sign
             return JsonResponse({'status':200, 'message':'success', 'data':guest})
 
-        
+# 嘉宾签到接口
+def user_sign(request):
+    eid = request.POST.get('eid', '')
+    phone = request.POST.get('phone', '')
+
+    # 如果event id或手机号为空，返回错误信息
+    if eid == '' or phone == '':
+        return JsonResponse({'status':10021, 'message':'parameter error'})
+
+    # 如果查不到给定的event id的发布会，返回错误信息
+    result = Event.objects.filter(id=eid)
+    if not result:
+        return JsonResponse({'status':10022, 'message':'event id null'})
+
+    result = Event.objects.get(id=eid).status
+    if not result:
+        return JsonResponse({'status':10023, 'message':'event status is not available'})
+
+    event_tiem = Event.objects.get(id=eid).start_time
+    etime = str(event_tiem).split('.')[0]
+    timeArray = time.strptime(etime, '%Y-%m-%d %H-%M-%S')
+    e_time = int(time.mktime(timeArray))
+
+    now_time = str(time.time())
+    ntime = now_time.split('.')[0]
+    n_time = int(ntime)
+
+    # 如果当前时间>=发布会开始时间，返回错误信息
+    if n_time >= e_time:
+        return JsonResponse({'status':10024, 'message':'event has started'})
+
+    # 如果查不到给出的手机号，返回错误信息
+    result = Guest.objects.filter(phone=phone)
+    if not result:
+        return JsonResponse({'status':10025, 'message':'user phone null'})
+
+    # 如果按照发布会id和手机号没查到结果，返回错误信息
+    result = Guest.objects.filter(id=eid, phone=phone)
+    if not result:
+        return JsonResponse({'status':10026, 'message':'user did not participate in the conference'})
+
+    result = Guest.objects.get(id=eid, phone=phone).sign
+    if result:
+        return JsonResponse({'status':10027, 'message':'user has sign in'})
+    else:
+        Guest.objects.filter(id=eid, phone=phone).update(sign='1')
+        return JsonResponse({'status':200, 'message':'sign success'})
+
+
+
+

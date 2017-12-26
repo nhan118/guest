@@ -17,14 +17,14 @@ base_dir = base_dir.replace("/", "\\")
 print(base_dir)
 # 拼接成db_config.ini的完整路径
 file_path = base_dir + '\db_config.ini'
-print(file_path)
+# print(file_path)
 
 # 1. 创建一个ConfigParser实例
 cf = cparser.ConfigParser()
 # 2. 读取配置文件
 cf.read(file_path)
 section = cf.sections()
-print(section)
+# print(section)
 # 读取配置文件的配置项，[]内的是section, 底下的options
 host = cf.get("mysqlconf", "host")
 port = int(cf.get("mysqlconf", "port"))
@@ -53,7 +53,7 @@ class DB(object):
     # 清除表数据
     def clear(self, table_name):
         # 1. 先拼出SQL语句的字符串，以下两种清除表的sql语句都可以
-        print(table_name)
+        # print(table_name)
         real_sql = 'truncate table ' + table_name + ";"
         # real_sql = 'delete from ' + table_name + ";"
         # print(real_sql)

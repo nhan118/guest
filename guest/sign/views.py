@@ -46,7 +46,7 @@ def search_name(request):
 def guest_manage(request):
     username = request.session.get('user', '')
     guest_list = Guest.objects.all()
-    paginator = Paginator(guest_list, 2, 2)  # 创建分页器，每页3条数据,少于2条将合并到上一页
+    paginator = Paginator(guest_list, 100, 2)  # 创建分页器，每页3条数据,少于2条将合并到上一页
     page = request.GET.get('page')
     try:
         contacts = paginator.page(page)

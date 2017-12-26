@@ -1,10 +1,11 @@
 import requests
 import unittest
 
+# @unittest.skip('want to test add guest')
 class GetEvnetListTest(unittest.TestCase):
     '''查询发布会接口测试'''
     def setUp(self):
-        self.url = 'http://127.0.0.1:8000/api/get_event_list/'
+        self.url = 'http://192.168.1.104:8086/api/get_event_list/'
 
     def test_get_event_null(self):
         '''发布会id为空'''

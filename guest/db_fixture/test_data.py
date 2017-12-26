@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 #-*- coding:utf-8 -*-
 import sys
-sys.path.append('..\\db_fixture')
-from mysql_db import DB
-
+sys.path.append('../db_fixture')
+from db_fixture.mysql_db import DB
+print(sys.path)
 # 创建测试数据
 datas = {
     # 发布会表数据

@@ -25,7 +25,7 @@ SECRET_KEY = 'f%1x0rpq6%ph&6rd_%pslob$-#e+fd@=6pj)h++w5j$$$51!iv'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -70,6 +70,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'guest.wsgi.application'
+# WSGI_APPLICATION = 'guest.apache.django.wsgi.application'
 
 
 # Database
@@ -83,7 +84,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'HOST': '127.0.0.1',
         'PORT': '3307',
-        'NAME': 'guest',
+        # 'NAME': 'guest',
+        'NAME': 'guest_test',
         'USER': 'root',
         'PASSWORD': '1qaz!QAZ',
         'OPTIONS': {'init_command':"SET sql_mode='STRICT_TRANS_TABLES'",},
